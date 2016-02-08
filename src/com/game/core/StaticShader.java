@@ -15,7 +15,6 @@ public class StaticShader extends ShaderProgram {
 	@Override
 	protected void bindAttributes() {
 		super.bindAttribute(0, "vertexPosition");
-		super.bindAttribute(1, "vertexUVs");
 	}
 
 }
