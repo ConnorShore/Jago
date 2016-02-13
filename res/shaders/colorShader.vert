@@ -5,9 +5,13 @@ in vec2 vertexUV;
 
 out vec2 fragmentUV;
 
+uniform mat4 transformationMatrix;
+uniform mat4 projectionMatrix;
+uniform mat4 viewMatrix;
+
 void main(void)
 {
-	gl_Position = vec4(vertexPosition, 1.0);
+	gl_Position = projectionMatrix * viewMatrix * transformationMatrix * vec4(vertexPosition, 1.0);
 	
 	fragmentUV = vertexUV;
 }
