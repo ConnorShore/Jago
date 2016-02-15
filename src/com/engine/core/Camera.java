@@ -13,7 +13,7 @@ public class Camera {
 	
 	public Camera() {
 		position = new Vector3f(0,0,0);
-		speed = 0.02f;
+		speed = 0.05f;
 	}
 	
 	public void input() {
