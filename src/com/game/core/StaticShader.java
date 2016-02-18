@@ -3,8 +3,8 @@ package com.game.core;
 import org.lwjgl.util.vector.Matrix4f;
 
 import com.engine.core.Camera;
-import com.engine.core.ShaderProgram;
 import com.engine.core.entity.Light;
+import com.engine.core.render.ShaderProgram;
 import com.engine.core.tools.Tools;
 
 public class StaticShader extends ShaderProgram {

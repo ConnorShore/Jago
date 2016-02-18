@@ -59,7 +59,7 @@ public class Loader {
 		try {
 			fr = new FileReader(new File("res/models/" + fileName));
 		} catch (FileNotFoundException e) {
-			System.err.println("Could not load model " + fileName);
+			Error.fatalError("Could not load model " + fileName);
 			e.printStackTrace();
 		}
 		

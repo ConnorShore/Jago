@@ -1,4 +1,4 @@
-package com.engine.core;
+package com.engine.core.render;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
