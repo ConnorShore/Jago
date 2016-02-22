@@ -19,7 +19,7 @@ void main(void)
 	vec4 worldPosition = transformationMatrix * vec4(vertexPosition, 1.0);
 	gl_Position = projectionMatrix * viewMatrix * worldPosition;
 	
-	fragmentUV = vertexUV * 40;
+	fragmentUV = vertexUV;
 	fragmentNormal = (transformationMatrix * vec4(vertexNormal, 0.0)).xyz;
 	toLightVector = lightPosition - worldPosition.xyz;
 }

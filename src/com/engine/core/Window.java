@@ -25,6 +25,7 @@ public class Window {
 		}
 		
 		GL11.glViewport(0, 0, WIDTH, HEIGHT);
+		Display.setVSyncEnabled(false);
 	}
 	
 	public static void update() {
