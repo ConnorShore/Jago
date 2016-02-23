@@ -22,7 +22,7 @@ public class Player {
 		position = camera.getPosition();
 		rotation = new Vector3f(camera.getYaw(), camera.getPitch(), camera.getRoll());
 		HEIGHT = 2.0f;
-		walkSpeed = 0.2f;
+		walkSpeed = 0.016f;
 		
 		position.y = camera.getPosition().y + HEIGHT;
 	}

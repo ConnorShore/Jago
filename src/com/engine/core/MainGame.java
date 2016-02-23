@@ -75,6 +75,7 @@ public class MainGame {
 		renderer.processEntity(entity);
 		renderer.processTerrain(terrain);
 		renderer.processTerrain(terrain2);
+		
 		Window.update();
 	}
 	
