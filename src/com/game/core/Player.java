@@ -13,42 +13,43 @@ public class Player {
 	private Vector3f position;
 	private Vector3f rotation;
 	
-	private float height;
 	private float walkSpeed;
+	
+	private final float HEIGHT;
 	
 	public Player() {
 		camera = new Camera();
 		position = camera.getPosition();
 		rotation = new Vector3f(camera.getYaw(), camera.getPitch(), camera.getRoll());
-		height = 2.0f;
-		walkSpeed = 0.2f;
+		HEIGHT = 2.0f;
+		walkSpeed = 0.016f;
 		
-		position.y = camera.getPosition().y + height;
+		position.y = camera.getPosition().y + HEIGHT;
 	}
 	
-	public void input() {
+	public void input(float delta) {
 		if(Keyboard.isKeyDown(Keyboard.KEY_W)) {
-			camera.moveForward(walkSpeed);
+			camera.moveForward(delta * walkSpeed);
 		}
 		
 		if(Keyboard.isKeyDown(Keyboard.KEY_S)) {
-			camera.moveForward(-walkSpeed);
+			camera.moveForward(-delta * walkSpeed);
 		}
 		
 		if(Keyboard.isKeyDown(Keyboard.KEY_A)) {
-			camera.moveSide(-walkSpeed);
+			camera.moveSide(-delta * walkSpeed);
 		}
 		
 		if(Keyboard.isKeyDown(Keyboard.KEY_D)) {
-			camera.moveSide(walkSpeed);
+			camera.moveSide(delta * walkSpeed);
 		}
 		
 		if(Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
-			camera.moveUp(walkSpeed);
+			camera.moveUp(delta * walkSpeed);
 		}
 		
 		if(Keyboard.isKeyDown(Keyboard.KEY_LCONTROL)) {
-			camera.moveUp(-walkSpeed);
+			camera.moveUp(delta * walkSpeed);
 		}
 		
 		if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
@@ -60,7 +61,7 @@ public class Player {
 		}
 	}
 
-	public void update() {
+	public void update(float delta) {
 		camera.update();
 	}
 	
@@ -77,7 +78,7 @@ public class Player {
 	}
 
 	public float getHeight() {
-		return height;
+		return HEIGHT;
 	}
 
 	public float getWalkSpeed() {

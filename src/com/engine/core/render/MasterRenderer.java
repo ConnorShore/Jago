@@ -16,7 +16,6 @@ import com.engine.core.models.TexturedModel;
 import com.engine.core.terrain.Terrain;
 import com.game.core.EntityRenderer;
 import com.game.core.StaticShader;
-import com.game.core.TerrainRenderer;
 import com.game.core.TerrainShader;
 
 public class MasterRenderer {
