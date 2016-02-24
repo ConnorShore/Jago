@@ -1,42 +1,67 @@
 package com.engine.core.entity.component;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class World {
-	private int ENTITY_COUNT = 50;
+	private static int currentEntity = 0;
 	
-	private int[] entities = new int[ENTITY_COUNT];
+	private static List<Integer> entities = new ArrayList<Integer>();
 	
 	//Components//
-	private PositionComponent[] position = new PositionComponent[ENTITY_COUNT];
-	private VelocityComponent[] velocity = new VelocityComponent[ENTITY_COUNT];
+	private static Map<Integer, PositionComponent> position = new HashMap<Integer, PositionComponent>();
+	private static Map<Integer, VelocityComponent> velocity = new HashMap<Integer, VelocityComponent>();
 	////
 	
 	public void addComponent(int id, Component comp) {
 		if(comp.getType() == ComponentType.POSITION.getValue()) {
-			position[id] = (PositionComponent) comp;
+			System.out.println("Position id: "+ id);
+			position.put(id, (PositionComponent) comp);
 		}
 		
 		if(comp.getType() == ComponentType.VELOCITY.getValue()) {
-			velocity[id] = (VelocityComponent) comp;
+			System.out.println("Velocity id: "+ id);
+			velocity.put(id, (VelocityComponent) comp);
 		}
 	}
 	
 	public int createEntity() {
-		for(int i = 0; i < entities.length; i++) {
-			if(entities[i] == ComponentType.NONE.getValue()) {
-				return i;
-			}
-		}
+		entities.add(currentEntity);
+		position.put(currentEntity, null);
+		velocity.put(currentEntity, null);
 		
-		resize();
-		return createEntity();
+		return currentEntity++;
+	}
+	
+	public static void print() {
+		for(int i = 0; i < currentEntity; i++) {
+			System.out.println("Entity ID: " + entities.get(i));
+			System.out.println("Position ID: " + position.get(i));
+			System.out.println("Velocity ID: " + velocity.get(i));
+		}
 	}
 	
 	public void destroyEntity(int entity) {
-		entities[entity] = ComponentType.NONE.getValue();
+		entities.set(entity, ComponentType.NONE.getValue());
 	}
 	
-	private void resize() {
-		ENTITY_COUNT = ENTITY_COUNT * 2;
+	public static void main(String[] args) {
+		Entity e1 = new Entity();
+		e1.addComponent(new PositionComponent(10, 2));
+		e1.addComponent(new VelocityComponent(0, 2));
+		
+		Entity e2 = new Entity();
+		e2.addComponent(new PositionComponent(10, 2));
+		e1.addComponent(new VelocityComponent(0, 2));
+		
+		Entity e3 = new Entity();
+		e3.addComponent(new VelocityComponent(0, 2));
+		
+		Entity e4 = new Entity();
+		e4.addComponent(new VelocityComponent(0, 2));
+		
+		print();
 	}
 }

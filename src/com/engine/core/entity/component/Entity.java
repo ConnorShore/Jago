@@ -7,9 +7,11 @@ public class Entity {
 	
 	public Entity() {
 		id = world.createEntity();
+		System.out.println("Entity id: " + id);
 	}
 	
 	public void addComponent(Component comp) {
+		world.addComponent(id, comp);
 	}
 	
 	public int getID() {
