@@ -11,6 +11,16 @@ public class World {
 	private VelocityComponent[] velocity = new VelocityComponent[ENTITY_COUNT];
 	////
 	
+	public void addComponent(int id, Component comp) {
+		if(comp.getType() == ComponentType.POSITION.getValue()) {
+			position[id] = (PositionComponent) comp;
+		}
+		
+		if(comp.getType() == ComponentType.VELOCITY.getValue()) {
+			velocity[id] = (VelocityComponent) comp;
+		}
+	}
+	
 	public int createEntity() {
 		for(int i = 0; i < entities.length; i++) {
 			if(entities[i] == ComponentType.NONE.getValue()) {

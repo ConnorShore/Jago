@@ -10,7 +10,6 @@ public class Entity {
 	}
 	
 	public void addComponent(Component comp) {
-		
 	}
 	
 	public int getID() {
