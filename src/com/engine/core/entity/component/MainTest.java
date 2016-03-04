@@ -1,8 +1,10 @@
-package com.engine.core;
+package com.engine.core.entity.component;
 
 import org.lwjgl.opengl.Display;
 import org.lwjgl.util.vector.Vector3f;
 
+import com.engine.core.Loader;
+import com.engine.core.Window;
 import com.engine.core.entity.Entity;
 import com.engine.core.entity.Light;
 import com.engine.core.models.RawModel;
@@ -14,7 +16,7 @@ import com.engine.core.textures.TerrainTexture;
 import com.engine.core.textures.TerrainTexturePack;
 import com.game.core.Player;
 
-public class MainGame {
+public class MainTest {
 	private Loader loader;
 	private MasterRenderer renderer;
 	
@@ -34,7 +36,7 @@ public class MainGame {
 	private float delta, timeCount;
 	private double lastLoopTime;
 	
-	public MainGame() {
+	public MainTest() {
 		Window.create();
 	}
 	

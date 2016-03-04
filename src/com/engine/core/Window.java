@@ -19,6 +19,7 @@ public class Window {
 		
 		try {
 			Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
+			Display.setTitle("Java Game \t FPS: " + MAX_FPS);
 			Display.create(new PixelFormat(), attribs);
 		} catch (LWJGLException e) {
 			e.printStackTrace();
