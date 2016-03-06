@@ -1,6 +1,5 @@
 package com.engine.core;
 
-import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.util.vector.Vector3f;
 
@@ -14,7 +13,7 @@ public class Camera {
 	private float dx, dy;
 	
 	public Camera() {
-		position = new Vector3f(0,0,0);
+		position = new Vector3f(450, 15, -150);
 		sensitivity = 0.05f;
 
 		Mouse.setGrabbed(true);

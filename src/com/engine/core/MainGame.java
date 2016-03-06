@@ -40,26 +40,6 @@ public class MainGame {
 		renderer = new MasterRenderer();
 		random = new Random(1538265);
 		
-		for (int i = 0; i < 2; i++) {
-			float x = random.nextFloat() * 800 - 400;
-			float z = random.nextFloat() * -600;
-			float y = 0;
-			entities.add(new Tree(new Vector3f(x, y, z), new Vector3f(0, random.nextInt(180), 0), 0.9f));
-
-			x = random.nextFloat() * 800 - 400;
-			z = random.nextFloat() * -600;
-			y = 0;
-			entities.add(new Tree(new Vector3f(x, y, z), new Vector3f(0, random.nextInt(180), 0), 1.9f));
-
-			x = random.nextFloat() * 800 - 400;
-			z = random.nextFloat() * -600;
-			y = 0;
-			entities.add(new Tree(new Vector3f(x, y, z), new Vector3f(0, random.nextInt(180), 0), 2.3f));
-		}
-
-		light = new Light(new Vector3f(0,50,-150), new Vector3f(0.65f, 0.65f, 0.65f));
-		player = new Player();
-		
 		backgroundTexture = new TerrainTexture(loader.loadTexture("grass.png"));
 		rTexture = new TerrainTexture(loader.loadTexture("dirt.png"));
 		gTexture = new TerrainTexture(loader.loadTexture("stone.png"));
@@ -70,6 +50,16 @@ public class MainGame {
 		
 		terrain = new Terrain(0,-1,loader, texturePack, blendMap, "heightMap.png");
 		terrain2 = new Terrain(-1,-1,loader, texturePack, blendMap, "heightMap.png");
+		
+		for (int i = 0; i < 150; i++) {
+			float x = random.nextFloat() * 800;
+			float z = random.nextFloat() * -800;
+			float y = terrain.getHeightOfTerrain(x, z);
+			entities.add(new Tree(new Vector3f(x, y, z), new Vector3f(0, random.nextInt(180), 0), random.nextFloat() * 1.5f));
+		}
+
+		light = new Light(new Vector3f(0,50,-150), new Vector3f(0.65f, 0.65f, 0.65f));
+		player = new Player();
 	}
 	
 	private void update(float delta) {

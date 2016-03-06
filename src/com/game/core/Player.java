@@ -78,7 +78,6 @@ public class Player {
 		
 		upwardsSpeed += GRAVITY * delta;
 		camera.moveUp(upwardsSpeed);
-		System.out.println("Round 1: " + upwardsSpeed);
 		
 		float terrainHeight = terrain.getHeightOfTerrain(camera.getPosition().x, camera.getPosition().z);
 		if((camera.getPosition().y - HEIGHT) < terrainHeight) {
@@ -86,8 +85,6 @@ public class Player {
 			inAir = false;
 			camera.setPosition(new Vector3f(camera.getPosition().x, terrainHeight + HEIGHT, camera.getPosition().z));
 		}
-
-		System.out.println("Round 2: " + upwardsSpeed);
 	}
 	
 	private void jump() {
