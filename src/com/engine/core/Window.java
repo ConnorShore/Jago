@@ -1,6 +1,7 @@
 package com.engine.core;
 
 import org.lwjgl.LWJGLException;
+import org.lwjgl.Sys;
 import org.lwjgl.opengl.ContextAttribs;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
@@ -13,6 +14,9 @@ public class Window {
 	public static final int HEIGHT = 720;
 	public static final int MAX_FPS = 60;
 	
+	private static long lastFrameTime;
+	private static float delta;
+	
 	public static void create() {
 		
 		ContextAttribs attribs = new ContextAttribs(3,2).withForwardCompatible(true).withProfileCore(true);
@@ -20,20 +24,33 @@ public class Window {
 		try {
 			Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
 			Display.create(new PixelFormat(), attribs);
+			Display.setTitle("Game    FPS: " + 60);
 		} catch (LWJGLException e) {
 			e.printStackTrace();
 		}
 		
 		GL11.glViewport(0, 0, WIDTH, HEIGHT);
 		Display.setVSyncEnabled(false);
+		lastFrameTime = getCurrentTime();
 	}
 	
 	public static void update() {
 		Display.sync(MAX_FPS);
 		Display.update();
+		long currentFrameTime = getCurrentTime();
+		delta = (currentFrameTime - lastFrameTime) / 1000f;
+		lastFrameTime = currentFrameTime;
 	}
 	
 	public static void close() {
 		Display.destroy();
+	}
+	
+	public static float getDelta() {
+		return delta;
+	}
+	
+	public static long getCurrentTime() {
+		return Sys.getTime() * 1000 / Sys.getTimerResolution();
 	}
 }

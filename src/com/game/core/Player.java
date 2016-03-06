@@ -5,29 +5,40 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.util.vector.Vector3f;
 
 import com.engine.core.Camera;
+import com.engine.core.terrain.Terrain;
 
 public class Player {
 	
 	private Camera camera;
 	
-	private Vector3f position;
-	private Vector3f rotation;
+	private Vector3f position, rotation;
 	
-	private float walkSpeed;
+	private float walkSpeed, upwardsSpeed;
 	
-	private final float HEIGHT;
+	private final float HEIGHT, GRAVITY, JUMP_POWER;
+	
+	private boolean inAir;
 	
 	public Player() {
 		camera = new Camera();
 		position = camera.getPosition();
 		rotation = new Vector3f(camera.getYaw(), camera.getPitch(), camera.getRoll());
 		HEIGHT = 2.0f;
-		walkSpeed = 0.2f;
+		walkSpeed = 20.0f;
+		GRAVITY = -3f;
+		JUMP_POWER = 1.15f;
+		inAir = true;
 		
 		position.y = camera.getPosition().y + HEIGHT;
 	}
 	
-	public void input(float delta) {
+	private void input(float delta) {
+		if(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
+			walkSpeed = 30.0f;
+		} else {
+			walkSpeed = 20.0f;
+		}
+		
 		if(Keyboard.isKeyDown(Keyboard.KEY_W)) {
 			camera.moveForward(delta * walkSpeed);
 		}
@@ -45,11 +56,11 @@ public class Player {
 		}
 		
 		if(Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
-			camera.moveUp(delta * walkSpeed);
+			jump();
 		}
 		
 		if(Keyboard.isKeyDown(Keyboard.KEY_LCONTROL)) {
-			camera.moveUp(delta * walkSpeed);
+			camera.moveUp(-delta * walkSpeed);
 		}
 		
 		if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
@@ -61,8 +72,29 @@ public class Player {
 		}
 	}
 
-	public void update(float delta) {
+	public void update(float delta, Terrain terrain) {
+		input(delta);
 		camera.update();
+		
+		upwardsSpeed += GRAVITY * delta;
+		camera.moveUp(upwardsSpeed);
+		System.out.println("Round 1: " + upwardsSpeed);
+		
+		float terrainHeight = terrain.getHeightOfTerrain(camera.getPosition().x, camera.getPosition().z);
+		if((camera.getPosition().y - HEIGHT) < terrainHeight) {
+			upwardsSpeed = 0.0f;
+			inAir = false;
+			camera.setPosition(new Vector3f(camera.getPosition().x, terrainHeight + HEIGHT, camera.getPosition().z));
+		}
+
+		System.out.println("Round 2: " + upwardsSpeed);
+	}
+	
+	private void jump() {
+		if(!inAir) {
+			upwardsSpeed = JUMP_POWER;
+			inAir = true;
+		}
 	}
 	
 	public Camera getCamera() {

@@ -2,18 +2,35 @@ package com.engine.core.entity;
 
 import org.lwjgl.util.vector.Vector3f;
 
+import com.engine.core.Loader;
 import com.engine.core.models.TexturedModel;
 
-public class Entity {
-	private TexturedModel model;
-	private Vector3f position, rotation;
-	private float scale;
+public abstract class Entity {
+	protected Loader loader = new Loader();
+	
+	protected TexturedModel model;
+	protected Vector3f position, rotation;
+	protected float scale;
 	
 	public Entity(TexturedModel model, Vector3f position, Vector3f rotation, float scale) {
 		this.model = model;
 		this.position = position;
 		this.rotation = rotation;
 		this.scale = scale;
+	}
+	
+	public Entity(Vector3f position, Vector3f rotation, float scale) {
+		this.model = null;
+		this.position = position;
+		this.rotation = rotation;
+		this.scale = scale;
+	}
+	
+	public Entity() {
+		this.model = null;
+		this.position = new Vector3f(0,0,0);
+		this.rotation = new Vector3f(0,0,0);
+		this.scale = 1.0f;
 	}
 	
 	public void moveEntity(float dx, float dy, float dz) {
@@ -27,6 +44,8 @@ public class Entity {
 		this.rotation.y += dy;
 		this.rotation.z += dz;
 	}
+	
+	public abstract void update(float delta);
 
 	public TexturedModel getModel() {
 		return model;
