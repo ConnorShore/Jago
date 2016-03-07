@@ -13,23 +13,24 @@ public class Player {
 	
 	private Vector3f position, rotation;
 	
-	private float walkSpeed, upwardsSpeed;
+	private float walkSpeed, upwardsSpeed, height;
 	
-	private final float HEIGHT, GRAVITY, JUMP_POWER;
+	private final float GRAVITY, JUMP_POWER;
 	
-	private boolean inAir;
+	private boolean inAir, crouched;
 	
 	public Player() {
 		camera = new Camera();
 		position = camera.getPosition();
 		rotation = new Vector3f(camera.getYaw(), camera.getPitch(), camera.getRoll());
-		HEIGHT = 2.0f;
+		height = 2.0f;
 		walkSpeed = 20.0f;
 		GRAVITY = -3f;
 		JUMP_POWER = 1.15f;
 		inAir = true;
+		crouched = false;
 		
-		position.y = camera.getPosition().y + HEIGHT;
+		position.y = camera.getPosition().y + height;
 	}
 	
 	private void input(float delta) {
@@ -37,6 +38,15 @@ public class Player {
 			walkSpeed = 30.0f;
 		} else {
 			walkSpeed = 20.0f;
+		}
+		
+		if(Keyboard.isKeyDown(Keyboard.KEY_LCONTROL)) {
+			crouched = true;
+			walkSpeed = 10.0f;
+			height = 1.25f;
+		} else {
+			crouched = false;
+			height = 2.0f;
 		}
 		
 		if(Keyboard.isKeyDown(Keyboard.KEY_W)) {
@@ -59,10 +69,6 @@ public class Player {
 			jump();
 		}
 		
-		if(Keyboard.isKeyDown(Keyboard.KEY_LCONTROL)) {
-			camera.moveUp(-delta * walkSpeed);
-		}
-		
 		if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
 			Mouse.setGrabbed(false);
 		}
@@ -80,10 +86,10 @@ public class Player {
 		camera.moveUp(upwardsSpeed);
 		
 		float terrainHeight = terrain.getHeightOfTerrain(camera.getPosition().x, camera.getPosition().z);
-		if((camera.getPosition().y - HEIGHT) < terrainHeight) {
+		if((camera.getPosition().y - height) < terrainHeight) {
 			upwardsSpeed = 0.0f;
 			inAir = false;
-			camera.setPosition(new Vector3f(camera.getPosition().x, terrainHeight + HEIGHT, camera.getPosition().z));
+			camera.setPosition(new Vector3f(camera.getPosition().x, terrainHeight + height, camera.getPosition().z));
 		}
 	}
 	
@@ -107,7 +113,7 @@ public class Player {
 	}
 
 	public float getHeight() {
-		return HEIGHT;
+		return height;
 	}
 
 	public float getWalkSpeed() {
