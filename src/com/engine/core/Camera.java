@@ -13,7 +13,8 @@ public class Camera {
 	private float dx, dy;
 	
 	public Camera() {
-		position = new Vector3f(450, 15, -150);
+		position = new Vector3f(0,0,0);
+		//position = new Vector3f(450, 15, -150);
 		sensitivity = 0.05f;
 
 		Mouse.setGrabbed(true);

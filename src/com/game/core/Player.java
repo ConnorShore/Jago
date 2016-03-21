@@ -79,6 +79,8 @@ public class Player {
 	}
 
 	public void update(float delta, Terrain terrain) {
+		position = camera.getPosition();
+		
 		input(delta);
 		camera.update();
 		

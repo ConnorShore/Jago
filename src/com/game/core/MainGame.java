@@ -1,4 +1,4 @@
-package com.engine.core;
+package com.game.core;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,6 +7,8 @@ import java.util.Random;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.util.vector.Vector3f;
 
+import com.engine.core.Loader;
+import com.engine.core.Window;
 import com.engine.core.entity.Entity;
 import com.engine.core.entity.Light;
 import com.engine.core.entity.Tree;
@@ -14,7 +16,6 @@ import com.engine.core.render.MasterRenderer;
 import com.engine.core.terrain.Terrain;
 import com.engine.core.textures.TerrainTexture;
 import com.engine.core.textures.TerrainTexturePack;
-import com.game.core.Player;
 
 public class MainGame {
 	private Random random;
@@ -27,9 +28,10 @@ public class MainGame {
 	private TerrainTexture backgroundTexture, rTexture, gTexture, bTexture, blendMap;
 	private TerrainTexturePack texturePack;
 	
-	private Terrain terrain, terrain2;
+	private Terrain terrainTR, terrainTL;
 	
 	private List<Entity> entities = new ArrayList<Entity>();
+	private List<Terrain> terrains = new ArrayList<Terrain>();
 	
 	public MainGame() {
 		Window.create();
@@ -48,22 +50,41 @@ public class MainGame {
 		
 		texturePack = new TerrainTexturePack(backgroundTexture, rTexture, bTexture, gTexture);
 		
-		terrain = new Terrain(0,-1,loader, texturePack, blendMap, "heightMap.png");
-		terrain2 = new Terrain(-1,-1,loader, texturePack, blendMap, "heightMap.png");
+		terrainTR = new Terrain(0,-1,loader, texturePack, blendMap, "heightMap.png");
+		terrainTL = new Terrain(-1,-1,loader, texturePack, blendMap, "heightMap.png");
+		terrains.add(terrainTR);
+		terrains.add(terrainTL);
+
+		player = new Player();
 		
 		for (int i = 0; i < 150; i++) {
-			float x = random.nextFloat() * 800;
+			float x = random.nextFloat() * 1600 - 800;
 			float z = random.nextFloat() * -800;
-			float y = terrain.getHeightOfTerrain(x, z);
+			float y = getActiveTerrain(new Vector3f(x, 0, z)).getHeightOfTerrain(x, z);
 			entities.add(new Tree(new Vector3f(x, y, z), new Vector3f(0, random.nextInt(180), 0), random.nextFloat() * 1.5f));
 		}
 
 		light = new Light(new Vector3f(0,50,-150), new Vector3f(0.65f, 0.65f, 0.65f));
-		player = new Player();
+	}
+	
+	private Terrain getActiveTerrain(Vector3f position) {
+		if(((int)position.x / 800) == 0 && position.x >= 0) {	//X: 0
+			if(((int) position.z / 800) == 0 && position.z < 0) {	//Z: -1
+				return terrainTR;
+			}
+		}
+		
+		else if(((int)position.x / 800) == 0 && position.x < 0) {	//X: -1
+			if(((int)position.z / 800) == 0 && position.z < 0) {	//Z: -1
+				return terrainTL;
+			}
+		}
+		
+		return terrainTR;
 	}
 	
 	private void update(float delta) {
-		player.update(delta, terrain);
+		player.update(delta, getActiveTerrain(player.getPosition()));
 	}
 	
 	private void render() {
@@ -71,8 +92,8 @@ public class MainGame {
 		for(Entity e : entities) {
 			renderer.processEntity(e);
 		}
-		renderer.processTerrain(terrain);
-		//renderer.processTerrain(terrain2);
+		for(Terrain t: terrains)
+			renderer.processTerrain(t);
 	}
 	
 	private void gameLoop() {

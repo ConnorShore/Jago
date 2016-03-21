@@ -1,7 +1,5 @@
 package com.game.core;
 
-import com.engine.core.MainGame;
-
 public class Application {
 	
 	private static MainGame game = new MainGame();
