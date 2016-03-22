@@ -26,7 +26,7 @@ public class Window {
 			Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
 			Display.create(new PixelFormat(), attribs);
 			Display.setFullscreen(false);
-			Display.setTitle("Game    FPS: " + 60);
+			Display.setTitle("Game    FPS: " + MAX_FPS);
 		} catch (LWJGLException e) {
 			e.printStackTrace();
 		}

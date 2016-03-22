@@ -9,7 +9,7 @@ public class Tree extends Entity {
 	
 	public Tree(Vector3f position, Vector3f rotation, float scale) {
 		super(position, rotation, scale);
-		model = new TexturedModel(loader.loadObjModel("tree.obj"), new ModelTexture(loader.loadTexture("tree.png")));
+		model = new TexturedModel(loader.loadObjModel("pine_tree.obj"), new ModelTexture(loader.loadTexture("pine_tree.png")));
 	}
 	
 	public void update(float delta) {

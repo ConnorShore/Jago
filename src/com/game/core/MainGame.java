@@ -39,8 +39,10 @@ public class MainGame {
 	
 	private void init() {
 		loader = new Loader();
-		renderer = new MasterRenderer();
+		renderer = new MasterRenderer(loader);
 		random = new Random(1538265);
+		
+		//*********TERRAIN***********//
 		
 		backgroundTexture = new TerrainTexture(loader.loadTexture("grass.png"));
 		rTexture = new TerrainTexture(loader.loadTexture("dirt.png"));
@@ -54,6 +56,8 @@ public class MainGame {
 		terrainTL = new Terrain(-1,-1,loader, texturePack, blendMap, "heightMap.png");
 		terrains.add(terrainTR);
 		terrains.add(terrainTL);
+		
+		//****************************//
 
 		player = new Player();
 		
@@ -68,6 +72,7 @@ public class MainGame {
 	}
 	
 	private Terrain getActiveTerrain(Vector3f position) {
+		//Terrain size : 800
 		if(((int)position.x / 800) == 0 && position.x >= 0) {	//X: 0
 			if(((int) position.z / 800) == 0 && position.z < 0) {	//Z: -1
 				return terrainTR;
@@ -89,6 +94,7 @@ public class MainGame {
 	
 	private void render() {
 		renderer.render(light, player.getCamera());
+		
 		for(Entity e : entities) {
 			renderer.processEntity(e);
 		}

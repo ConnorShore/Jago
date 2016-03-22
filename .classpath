@@ -10,5 +10,6 @@
 	<classpathentry kind="lib" path="C:/Users/user/OneDrive/Documents/Programming/Java/lwjgl-2.9.1/jar/lwjgl_test.jar"/>
 	<classpathentry kind="lib" path="C:/Users/user/OneDrive/Documents/Programming/Java/slick-util.jar"/>
 	<classpathentry kind="lib" path="C:/Users/user/OneDrive/Documents/Programming/Java/lwjgl-2.9.1/jar/lwjgl_util.jar"/>
+	<classpathentry kind="lib" path="C:/Users/user/OneDrive/Documents/Programming/Java/PNGDecoder.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
